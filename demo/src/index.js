@@ -1,15 +1,25 @@
-import React, {Component} from 'react'
-import {render} from 'react-dom'
+import React, { Component } from 'react';
+import { render } from 'react-dom';
 
-import Example from '../../src'
+// Components
+import ReactCarouselize from '../../src';
+
+// Style
+import './index.css';
 
 class Demo extends Component {
   render() {
-    return <div>
-      <h1>react-carouselize Demo</h1>
-      <Example/>
-    </div>
+    return (
+      <div className="app">
+        <ReactCarouselize animation="h-scroll">
+          <div className="first">1</div>
+          <div className="second">2</div>
+          <div className="third">3</div>
+          <div className="fourth">4</div>
+        </ReactCarouselize>
+      </div>
+    );
   }
 }
 
-render(<Demo/>, document.querySelector('#demo'))
+render(<Demo />, document.querySelector('#demo'))
