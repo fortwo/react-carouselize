@@ -11,7 +11,7 @@ class Demo extends Component {
   render() {
     return (
       <div className="app">
-        <ReactCarouselize animation="h-scroll">
+        <ReactCarouselize animation="fade">
           <div className="first">1</div>
           <div className="second">2</div>
           <div className="third">3</div>
