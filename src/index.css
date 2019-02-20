@@ -1,0 +1,131 @@
+.carouselize {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  visibility: hidden;
+  font-size: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all .25s ease;
+}
+
+/* Vertical Scroll */
+.carouselize.v-scroll .slide {
+  top: -100%;
+  left: 0;
+}
+
+.carouselize.v-scroll .slide.previous {
+  top: 100%;
+  visibility: hidden;
+}
+
+.carouselize.v-scroll .slide.selected {
+  top: 0;
+  visibility: visible;
+}
+
+.carouselize.v-scroll .slide.ready {
+  top: -100%;
+  visibility: hidden;
+}
+
+/* Horizontal Scroll */
+.carouselize.h-scroll .slide {
+  top: 0;
+  left: -100%;
+}
+
+.carouselize.h-scroll .slide.previous {
+  left: 100%;
+  visibility: hidden;
+}
+
+.carouselize.h-scroll .slide.selected {
+  left: 0;
+  visibility: visible;
+}
+
+.carouselize.h-scroll .slide.ready {
+  left: -100%;
+  visibility: hidden;
+}
+
+/* Fade */
+.carouselize.fade .slide {
+  opacity: 0;
+}
+
+.carouselize.fade .slide.previous {
+  opacity: 1;
+  visibility: hidden;
+}
+
+.carouselize.fade .slide.selected {
+  opacity: 1;
+  visibility: visible;
+}
+
+.carouselize.fade .slide.ready {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Navigation */
+.navigation {
+  position: absolute;
+  display: flex;
+}
+
+.navigation .bullet {
+  font-size: 48px;
+  user-select: none;
+}
+
+.navigation.enabled .bullet {
+  cursor: pointer;
+}
+
+.navigation .bullet.selected {
+  color: white;
+}
+
+.navigation.top, .navigation.bottom {
+  flex-direction: row;
+}
+
+.navigation.left, .navigation.right {
+  flex-direction: column;
+}
+
+.navigation.top {
+  top: 25px;
+  transform: translateX(-50%);
+  left: 50%;
+}
+
+.navigation.right {
+  top: 50%;
+  transform: translateY(-50%);
+  right: 25px;
+}
+
+.navigation.bottom {
+  bottom: 25px;
+  transform: translateX(-50%);
+  left: 50%;
+}
+
+.navigation.left {
+  top: 50%;
+  transform: translateY(-50%);
+  left: 25px;
+}
