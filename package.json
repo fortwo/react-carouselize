@@ -1,6 +1,6 @@
 {
   "name": "react-carouselize",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "react-carouselize React component",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -29,11 +29,16 @@
     "react": "^16.8.2",
     "react-dom": "^16.8.2"
   },
-  "author": "",
+  "author": "Francesco Fortunati",
   "homepage": "",
   "license": "MIT",
-  "repository": "",
+  "repository": "https://github.com/one89/react-carouselize",
   "keywords": [
+    "react",
+    "carousel",
+    "slider",
+    "slideshow",
+    "ui",
     "react-component"
   ]
 }
