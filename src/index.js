@@ -135,7 +135,7 @@ class Carouselize extends React.Component {
 Carouselize.propTypes = {
   duration: PropTypes.number,
   animation: PropTypes.oneOf(['v-scroll', 'h-scroll', 'fade']),
-  navigation: PropTypes.oneOf('top', 'right', 'bottom', 'left'),
+  navigation: PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
   enableNavigation: PropTypes.bool,
   enableKeys: PropTypes.bool,
 };
