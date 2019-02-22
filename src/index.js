@@ -105,9 +105,11 @@ class Carouselize extends React.Component {
     const { animation, children, navigation, enableNavigation } = this.props;
     const { current } = this.state;
 
+    const items = React.Children.toArray(children);
+
     return (
       <div className={classNames('carouselize', animation)}>
-        {children.map((child, index) => {
+        {items.map((child, index) => {
           const previous = (current === 0 && index === children.length - 1) || current === index + 1 ? 'previous' : '';
           const selected = current === index ? 'selected' : '';
           const ready = !previous && !selected ? 'ready' : '';
@@ -119,7 +121,7 @@ class Carouselize extends React.Component {
 
         {navigation &&
           <nav className={classNames('navigation', navigation, enableNavigation && 'enabled')}>
-            {children.map((child, index) => {
+            {items.map((child, index) => {
               const selected = current === index ? 'selected' : '';
               return (
                 <div key={index} className={classNames('bullet', selected)} onClick={() => this.goTo(index)}>&bull;</div>
