@@ -19,7 +19,7 @@
 
 /* Vertical Scroll */
 .carouselize.v-scroll .slide {
-  top: -100%;
+  top: 100%;
   left: 0;
 }
 
@@ -45,7 +45,7 @@
 }
 
 .carouselize.h-scroll .slide.previous {
-  left: 100%;
+  left: -100%;
   visibility: hidden;
 }
 
@@ -55,7 +55,7 @@
 }
 
 .carouselize.h-scroll .slide.ready {
-  left: -100%;
+  left: 100%;
   visibility: hidden;
 }
 
