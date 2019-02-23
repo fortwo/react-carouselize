@@ -1,6 +1,6 @@
 {
   "name": "react-carouselize",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "react-carouselize React component",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -47,6 +47,8 @@
     "slider",
     "slideshow",
     "ui",
-    "react-component"
+    "react-component",
+    "gallery",
+    "image-gallery"
   ]
 }
