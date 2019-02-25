@@ -47,7 +47,6 @@ class Carouselize extends React.Component {
         break;
 
       default:
-        e.preventDefault();
         break;
     }
   }
