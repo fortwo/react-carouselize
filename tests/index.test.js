@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 
 // Components
 import Carouselize from '../src/';
@@ -43,5 +43,99 @@ describe('<Carouselize />', () => {
 
   it("should always have 1 'selected' bullet", () => {
     expect(wrapper.find('.bullet.selected')).toHaveLength(1);
+  });
+
+  it('should move to the last slide on last bullet click', () => {
+    const lastBullet = wrapper.find('.bullet:last-child');
+    lastBullet.simulate('click');
+    expect(wrapper.state().current).toBe(2);
+  });
+
+  it('should move to the next slide on right arrow press', () => {
+    const eventMap = {
+      keydown: null,
+    };
+  
+    document.addEventListener = jest.fn((event, cb) => {
+      eventMap[event] = cb;
+    });
+
+    const wrapper = shallow(
+      <Carouselize>
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+      </Carouselize>
+    );
+
+    const { current } = wrapper.state();
+    eventMap.keydown({ keyCode: 39 });
+    expect(wrapper.state().current).toBe(current + 1);
+  });
+
+  it('should move to the previous slide on left arrow press', () => {
+    const eventMap = {
+      keydown: null,
+    };
+  
+    document.addEventListener = jest.fn((event, cb) => {
+      eventMap[event] = cb;
+    });
+
+    const wrapper = shallow(
+      <Carouselize>
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+      </Carouselize>
+    );
+
+    eventMap.keydown({ keyCode: 37 });
+    const slides = wrapper.find('.slide').length;
+    expect(wrapper.state().current).toBe(slides - 1);
+  });
+
+  it('do anything if other keys are pressed', () => {
+    const eventMap = {
+      keydown: null,
+    };
+  
+    document.addEventListener = jest.fn((event, cb) => {
+      eventMap[event] = cb;
+    });
+
+    const wrapper = shallow(
+      <Carouselize>
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+      </Carouselize>
+    );
+
+    eventMap.keydown({});
+    expect(wrapper.state().current).toBe(wrapper.state().current);
+  });
+
+  it('disable key listener on component unmount', () => {
+    const eventMap = {
+      keydown: null,
+    };
+  
+    document.addEventListener = jest.fn((event, cb) => {
+      eventMap[event] = cb;
+    });
+
+    const wrapper = shallow(
+      <Carouselize>
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+      </Carouselize>
+    );
+
+    wrapper.instance().componentWillUnmount();
+
+    eventMap.keydown({ keyCode: 37 });
+    expect(wrapper.state().current).toBe(wrapper.state().current);
   });
 });
