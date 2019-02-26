@@ -1,6 +1,6 @@
 ![npm](https://img.shields.io/npm/v/react-carouselize.svg)
 ![travis build](https://travis-ci.org/one89/react-carouselize.svg?branch=master)
-![Coveralls github branch](https://img.shields.io/coveralls/github/one89/react-carouselize/master.svg)
+[![Coverage Status](https://coveralls.io/repos/github/one89/react-carouselize/badge.svg?branch=master)](https://coveralls.io/github/one89/react-carouselize?branch=master)
 
 # React-Carouselize
 
