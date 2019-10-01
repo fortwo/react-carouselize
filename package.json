@@ -36,8 +36,8 @@
     "jest": "^24.1.0",
     "jest-transform-css": "^2.0.0",
     "nwb": "0.23.x",
-    "react": "^16.8.2",
-    "react-dom": "^16.8.2"
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1"
   },
   "author": "Francesco Fortunati",
   "homepage": "",
