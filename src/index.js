@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import PropTypes from 'prop-types';
 
 // Utils
@@ -7,43 +7,32 @@ import classNames from 'classnames';
 // Style
 import './index.css';
 
-class Carouselize extends React.Component {
-  constructor(props) {
-    super(props);
+const Carouselize = (props) =>{
 
-    this.state = {
-      current: 0,
-    };
+ useEffect(() =>{
+  setInterval();
 
-    this.setInterval = this.setInterval.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.goTo = this.goTo.bind(this);
-    this.goToPrev = this.goToPrev.bind(this);
-    this.goToNext = this.goToNext.bind(this);
+  if (props.enableKeys) {
+    document.addEventListener('keydown', handleKeyDown);
   }
+ },[])
+    
+  
 
-  componentDidMount() {
-    this.setInterval();
+  // componentWillUnmount() {
+  //   if (props.enableKeys) {
+  //     document.removeEventListener('keydown', handleKeyDown);
+  //   }
+  // }
 
-    if (this.props.enableKeys) {
-      document.addEventListener('keydown', this.handleKeyDown);
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.props.enableKeys) {
-      document.removeEventListener('keydown', this.handleKeyDown);
-    }
-  }
-
-  handleKeyDown(e) {
+  const handleKeyDown = (e) => {
     switch (e.keyCode) {
       case 37:
-        this.goToPrev();
+        goToPrev();
         break;
 
       case 39:
-        this.goToNext();
+        goToNext();
         break;
 
       default:
@@ -51,58 +40,58 @@ class Carouselize extends React.Component {
     }
   }
 
-  setInterval() {
-    this.interval = setInterval(() => {
-      this.setState({
-        current: this.state.current === (this.props.children.length - 1) ? 0 : this.state.current + 1,
+  const setInterval = () => {
+    interval = setInterval(() => {
+      setState({
+        current: state.current === (props.children.length - 1) ? 0 : state.current + 1,
       });
-    }, this.props.duration);
+    }, props.duration);
   }
 
-  goTo(current) {
-    if (this.props.enableNavigation) {
-      clearInterval(this.interval);
+  const goTo = (current) => {
+    if (props.enableNavigation) {
+      clearInterval(interval);
   
-      this.setState(
+      setState(
         {
           current,
         },
         () => {
-          this.setInterval();
+          setInterval();
         },
       );
     }
   }
 
-  goToPrev() {
-    clearInterval(this.interval);
+  const goToPrev = () => {
+    clearInterval(interval);
 
-    this.setState(
+    setState(
       {
-        current: this.state.current === 0 ? this.props.children.length - 1 : this.state.current - 1,
+        current: state.current === 0 ? props.children.length - 1 : state.current - 1,
       },
       () => {
-        this.setInterval();
+        setInterval();
       },
     );
   }
 
-  goToNext() {
-    clearInterval(this.interval);
+  const goToNext = () => {
+    clearInterval(interval);
 
-    this.setState(
+    setState(
       {
-        current: this.state.current === this.props.children.length - 1 ? 0 : this.state.current + 1,
+        current: state.current === props.children.length - 1 ? 0 : state.current + 1,
       },
       () => {
-        this.setInterval();
+        setInterval();
       },
     );
   }
 
-  render() {
-    const { animation, children, navigation, enableNavigation } = this.props;
-    const { current } = this.state;
+
+    const { animation, children, navigation, enableNavigation } = props;
+    const { current } = state;
 
     const items = React.Children.toArray(children);
 
@@ -123,7 +112,7 @@ class Carouselize extends React.Component {
             {items.map((child, index) => {
               const selected = current === index ? 'selected' : '';
               return (
-                <div key={index} className={classNames('bullet', selected)} onClick={() => this.goTo(index)}>&bull;</div>
+                <div key={index} className={classNames('bullet', selected)} onClick={() => goTo(index)}>&bull;</div>
               );
             })}
           </nav>
@@ -131,7 +120,7 @@ class Carouselize extends React.Component {
       </div>
     );
   }
-}
+
 
 Carouselize.propTypes = {
   duration: PropTypes.number,
