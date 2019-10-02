@@ -8,9 +8,10 @@ import classNames from 'classnames';
 import './index.css';
 
 const Carouselize = (props) =>{
-
+  let [state,setState] = useState({})
+console.log(props)
  useEffect(() =>{
-  setInterval();
+  // setInterval();
 
   if (props.enableKeys) {
     document.addEventListener('keydown', handleKeyDown);
@@ -39,9 +40,9 @@ const Carouselize = (props) =>{
         break;
     }
   }
-
+  let interval
   const setInterval = () => {
-    interval = setInterval(() => {
+     interval = setInterval(() => {
       setState({
         current: state.current === (props.children.length - 1) ? 0 : state.current + 1,
       });
