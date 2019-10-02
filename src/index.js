@@ -1,152 +1,141 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 
 // Utils
-import classNames from 'classnames';
+import classNames from "classnames";
 
 // Style
-import './index.css';
+import "./index.css";
 
-class Carouselize extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      current: 0,
+const Carouselize = props => {
+ 
+  const [state, setState] = useState({ current: 0 });
+  useEffect(() => {
+    if (props.enableKeys) {
+      document.addEventListener("keydown", handleKeyDown);
+    }
+    //start timer
+    const timer = setTimeout(() => {
+      setState({
+        current:
+          state.current === props.children.length - 1 ? 0 : state.current + 1
+      });
+    }, props.duration);
+    return () => {
+      clearTimeout(timer);
+      if (props.enableKeys) {
+        document.removeEventListener("keydown", handleKeyDown);
+      }
     };
+  }, [state]);
 
-    this.setInterval = this.setInterval.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.goTo = this.goTo.bind(this);
-    this.goToPrev = this.goToPrev.bind(this);
-    this.goToNext = this.goToNext.bind(this);
-  }
-
-  componentDidMount() {
-    this.setInterval();
-
-    if (this.props.enableKeys) {
-      document.addEventListener('keydown', this.handleKeyDown);
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.props.enableKeys) {
-      document.removeEventListener('keydown', this.handleKeyDown);
-    }
-  }
-
-  handleKeyDown(e) {
+  const handleKeyDown = e => {
     switch (e.keyCode) {
       case 37:
-        this.goToPrev();
+        goToPrev();
         break;
 
       case 39:
-        this.goToNext();
+        goToNext();
         break;
 
       default:
         break;
     }
-  }
+  };
 
-  setInterval() {
-    this.interval = setInterval(() => {
-      this.setState({
-        current: this.state.current === (this.props.children.length - 1) ? 0 : this.state.current + 1,
-      });
-    }, this.props.duration);
-  }
-
-  goTo(current) {
-    if (this.props.enableNavigation) {
-      clearInterval(this.interval);
   
-      this.setState(
-        {
-          current,
-        },
-        () => {
-          this.setInterval();
-        },
-      );
+
+  const goTo = current => {
+    if (props.enableNavigation) {
+      setState({
+        current
+      });
     }
-  }
+  };
 
-  goToPrev() {
-    clearInterval(this.interval);
+  const goToPrev = () => {
+    setState({
+      current:
+        state.current === 0 ? props.children.length - 1 : state.current - 1
+    });
+  };
 
-    this.setState(
-      {
-        current: this.state.current === 0 ? this.props.children.length - 1 : this.state.current - 1,
-      },
-      () => {
-        this.setInterval();
-      },
-    );
-  }
+  const goToNext = () => {
+    setState({
+      current:
+        state.current === props.children.length - 1 ? 0 : state.current + 1
+    });
+  };
 
-  goToNext() {
-    clearInterval(this.interval);
+  const { animation, children, navigation, enableNavigation } = props;
+  const { current } = state;
 
-    this.setState(
-      {
-        current: this.state.current === this.props.children.length - 1 ? 0 : this.state.current + 1,
-      },
-      () => {
-        this.setInterval();
-      },
-    );
-  }
+  const items = React.Children.toArray(children);
 
-  render() {
-    const { animation, children, navigation, enableNavigation } = this.props;
-    const { current } = this.state;
+  return (
+    <div className={classNames("carouselize", animation)}>
+      {items.map((child, index) => {
+        const previous =
+          (current === 0 && index === children.length - 1) ||
+          current === index + 1
+            ? "previous"
+            : "";
+        const selected = current === index ? "selected" : "";
+        const ready = !previous && !selected ? "ready" : "";
+        return React.cloneElement(child, {
+          key: index,
+          className: classNames(
+            child.props.className,
+            "slide",
+            previous,
+            selected,
+            ready
+          )
+        });
+      })}
 
-    const items = React.Children.toArray(children);
-
-    return (
-      <div className={classNames('carouselize', animation)}>
-        {items.map((child, index) => {
-          const previous = (current === 0 && index === children.length - 1) || current === index + 1 ? 'previous' : '';
-          const selected = current === index ? 'selected' : '';
-          const ready = !previous && !selected ? 'ready' : '';
-          return React.cloneElement(child, {
-            key: index,
-            className: classNames(child.props.className, 'slide', previous, selected, ready),
-          });
-        })}
-
-        {navigation &&
-          <nav className={classNames('navigation', navigation, enableNavigation && 'enabled')}>
-            {items.map((child, index) => {
-              const selected = current === index ? 'selected' : '';
-              return (
-                <div key={index} className={classNames('bullet', selected)} onClick={() => this.goTo(index)}>&bull;</div>
-              );
-            })}
-          </nav>
-        }
-      </div>
-    );
-  }
-}
+      {navigation && (
+        <nav
+          className={classNames(
+            "navigation",
+            navigation,
+            enableNavigation && "enabled"
+          )}
+        >
+          {items.map((child, index) => {
+            const selected = current === index ? "selected" : "";
+            return (
+              <div
+                key={index}
+                className={classNames("bulconst", selected)}
+                onClick={() => goTo(index)}
+              >
+                &bull;
+              </div>
+            );
+          })}
+        </nav>
+      )}
+    </div>
+  );
+};
 
 Carouselize.propTypes = {
   duration: PropTypes.number,
-  animation: PropTypes.oneOf(['v-scroll', 'h-scroll', 'fade']),
-  navigation: PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
+  animation: PropTypes.oneOf(["v-scroll", "h-scroll", "fade"]),
+  navigation: PropTypes.oneOf(["top", "right", "bottom", "left"]),
   enableNavigation: PropTypes.bool,
-  enableKeys: PropTypes.bool,
+  enableKeys: PropTypes.bool
 };
 
 Carouselize.defaultProps = {
   duration: 5000,
-  animation: 'v-scroll',
-  navigation: 'left',
+  animation: "v-scroll",
+  navigation: "left",
   enableNavigation: true,
-  enableKeys: true,
+  enableKeys: true
 };
 
 export default Carouselize;
+
