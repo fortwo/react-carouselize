@@ -9,14 +9,20 @@ import "./index.css";
 
 const Carouselize = props => {
  
-  let [state, setState] = useState({ current: 0 });
+  const [state, setState] = useState({ current: 0 });
   useEffect(() => {
     if (props.enableKeys) {
       document.addEventListener("keydown", handleKeyDown);
     }
-
+    //start timer
+    const timer = setTimeout(() => {
+      setState({
+        current:
+          state.current === props.children.length - 1 ? 0 : state.current + 1
+      });
+    }, props.duration);
     return () => {
-      clearTimeout(begin);
+      clearTimeout(timer);
       if (props.enableKeys) {
         document.removeEventListener("keydown", handleKeyDown);
       }
@@ -38,12 +44,7 @@ const Carouselize = props => {
     }
   };
 
-  let begin = setTimeout(() => {
-    setState({
-      current:
-        state.current === props.children.length - 1 ? 0 : state.current + 1
-    });
-  }, props.duration);
+  
 
   const goTo = current => {
     if (props.enableNavigation) {
@@ -107,7 +108,7 @@ const Carouselize = props => {
             return (
               <div
                 key={index}
-                className={classNames("bullet", selected)}
+                className={classNames("bulconst", selected)}
                 onClick={() => goTo(index)}
               >
                 &bull;
