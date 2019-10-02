@@ -42,7 +42,7 @@ console.log(props)
   }
   let interval
   const setInterval = () => {
-     interval = setInterval(() => {
+    let interval = setInterval(() => {
       setState({
         current: state.current === (props.children.length - 1) ? 0 : state.current + 1,
       });
@@ -56,10 +56,7 @@ console.log(props)
       setState(
         {
           current,
-        },
-        () => {
-          setInterval();
-        },
+        }
       );
     }
   }
@@ -70,10 +67,7 @@ console.log(props)
     setState(
       {
         current: state.current === 0 ? props.children.length - 1 : state.current - 1,
-      },
-      () => {
-        setInterval();
-      },
+      }
     );
   }
 
@@ -83,10 +77,8 @@ console.log(props)
     setState(
       {
         current: state.current === props.children.length - 1 ? 0 : state.current + 1,
-      },
-      () => {
-        setInterval();
-      },
+      }
+     
     );
   }
 
