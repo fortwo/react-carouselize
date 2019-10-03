@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useState, useRef } from 'react';
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 
 // Utils
 import classNames from 'classnames';
@@ -33,12 +33,12 @@ const Carouselize = props => {
 
   const handleKeyDown = useCallback(
     e => {
-      switch (e.keyCode) {
-        case 37:
+      switch (e.key) {
+        case 'ArrowLeft':
           goToPrev();
           break;
 
-        case 39:
+        case 'ArrowRight':
           goToNext();
           break;
 
